@@ -8,21 +8,17 @@ namespace ReaderAPI
         {
             using (var package = new ExcelPackage(new System.IO.FileInfo(filePath)))
             {
-                // Get the first worksheet in the Excel file
                 var worksheet = package.Workbook.Worksheets[0];
 
-                // Get the dimensions of the worksheet
                 var start = worksheet.Dimension.Start;
                 var end = worksheet.Dimension.End;
 
-                // Read data into a 2D array
                 object[,] data = new object[end.Row, end.Column];
 
                 for (int row = start.Row; row <= end.Row; row++)
                 {
                     for (int col = start.Column; col <= end.Column; col++)
                     {
-                        // Note: EPPlus indexes are 1-based, not 0-based
                         data[row - 1, col - 1] = worksheet.Cells[row, col].Value;
                     }
                 }
@@ -109,7 +105,6 @@ namespace ReaderAPI
 
         public static void DisplayData(object[,] data)
         {
-            // Display data in the console
             for (int row = 0; row < data.GetLength(0); row++)
             {
                 Console.WriteLine("The numbers in grade are: ");
